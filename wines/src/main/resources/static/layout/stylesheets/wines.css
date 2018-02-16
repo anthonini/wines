@@ -1,3 +1,6 @@
+.wines-required > .control-label:after {
+	content: "*";
+}
 .wines-layout-page {
   position: relative;
   overflow-x: hidden;
@@ -77,6 +80,9 @@
   width: 210px;
 }
 
+.wines-required-fields-text{
+	text-align: center;
+}
 
 /*-------------------------------------------------*\
   Footer disclaimer

@@ -20,4 +20,9 @@ $(function() {
   
   // Bind events
   $('.js-sidebar-toggle').bind('click', Wines.onSidebarToggleRequest);
+  
+  $('.js-currency').maskNumber({
+	  decimal: ',',
+	  thousands: '.'
+  });
 });
