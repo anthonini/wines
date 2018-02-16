@@ -65,62 +65,55 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			<h1>
-				Wine Register
+				Wine Search
 			</h1>
 		</div>
 	</div>
 
 	<div class="container-fluid">
-	
-		<div class="alert  alert-success  alert-dismissible" role="alert" th:if="${!#strings.isEmpty(message)}">
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<span th:text="${message}"></span>
-		</div>
-	
-		<form method="POST" class="form-vertical" th:action="@{/wines/new}" th:object="${wine}">
-			
-			<div class="alert  alert-danger  alert-dismissible" role="alert" th:if="${#fields.hasAnyErrors()}">
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<th:block th:each="error : ${#fields.detailedErrors()}">
-					<div>
-							<i class="fa  fa-exclamation-circle"></i>
-							<span th:text="${error.message}"></span>
-					</div>
-				</th:block>
-			</div>
-			
-			<div class="form-group wines-required" th:classappend="${#fields.hasErrors('name')} ? has-error">
-				<label for="input-product-name" class="control-label">Name</label>
-				<input id="input-product-name" type="text" class="form-control" th:field="*{name}" />
-			</div>
-	
-			<div class="row">			
-				<div class="col-sm-6">
-					<div class="form-group wines-required" th:classappend="${#fields.hasErrors('wineType')} ? has-error">
-						<label for="select-product-type" class="control-label">Type</label>
-						<select id="select-product-type" class="form-control" th:field="*{wineType}">
-							<option value="">Select one</option>
-							<option th:each="wineType : ${wineTypes}" th:value="${wineType}" th:text="#{|wineType.${wineType}|}">Wine Type</option>
-						</select>
-					</div>
-				</div>
-				
-				<div class="col-sm-6">
-					<div class="form-group wines-required" th:classappend="${#fields.hasErrors('price')} ? has-error">
-						<label for="input-product-price" class="control-label">Price</label>
-						<input id="input-product-price" type="text" class="form-control js-currency" placeholder="R$" th:field="*{price}"/>
-					</div>
-				</div>
-			</div>
+		
+		<form method="GET" class="form-vertical js-form-loading" th:object="${wineFilter}">		
 			
 			<div class="form-group">
-				<button class="btn  btn-primary" type="submit">Save</button>
-			</div>
-			
-			<div class="wines-required-fields-text">
-				* Required fields
+				<div class="input-group">
+					<input id="nome" type="text" class="form-control" placeholder="Search by nome" th:field="*{name}" autofocus="autofocus"/>
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="submit">
+							<span class="glyphicon glyphicon-search"></span>
+						</button>
+					</span>
+				</div>
 			</div>
 	
+			<div class="table-responsive">
+			    <table class="table table-bordered table-striped">
+			    	<thead>
+			    		<tr>
+			    			<th class="text-center col-md-1">#</th>
+			    			<th class="col-md-7">Name</th>
+			    			<th class="text-center col-md-1">Type</th>
+			    			<th class="text-right col-md-2">Price</th>
+			    			<th class="col-md-1"></th>
+			    		</tr>
+			    	</thead>
+			    	<tbody>
+			    		<tr th:each="wine : ${wines}">
+			    			<td class="text-center" th:text="${wine.id}"></td>
+			    			<td>
+			    				<span th:text="${wine.name}"></span>
+			    			</td>
+			    			<td class="text-center" th:text="#{|wineType.${wine.wineType}|}"></td>
+			    			<td class="text-right" th:text="|R$ ${{wine.price}}|"></td>
+			    			<td class="text-center">
+			    				<i class="fa fa-trash" style="cursor:pointer"></i>
+			    			</td>
+			    		</tr>
+			    		<tr th:if="${#lists.isEmpty(wines)}">
+			    			<td colspan="6">No wine found.</td>
+			    		</tr>
+			    	</tbody>
+			    </table>
+		    </div>		
 		</form>
 	</div>
 

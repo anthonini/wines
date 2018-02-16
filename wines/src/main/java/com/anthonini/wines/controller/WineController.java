@@ -1,10 +1,13 @@
 package com.anthonini.wines.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -12,6 +15,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.anthonini.wines.model.Wine;
 import com.anthonini.wines.model.WineType;
+import com.anthonini.wines.repository.WineFilter;
+import com.anthonini.wines.repository.WineRepository;
 import com.anthonini.wines.service.WineService;
 import com.anthonini.wines.service.exception.WineNameAlreadyExistsException;
 
@@ -21,6 +26,9 @@ public class WineController {
 	
 	@Autowired
 	private WineService wineService;
+	
+	@Autowired
+	private WineRepository wineRepository;
 
 	@GetMapping("/new")
 	public ModelAndView form(Wine wine) {
@@ -45,5 +53,14 @@ public class WineController {
 		
 		attributes.addFlashAttribute("message", "Wine successfully saved!");
 		return new ModelAndView("redirect:/wines/new");
+	}
+	
+	@GetMapping
+	public ModelAndView search(@ModelAttribute WineFilter wineFilter) {
+		ModelAndView modelAndView = new ModelAndView("wine/list");
+		modelAndView.addObject("wines", wineRepository.findAllByNameContainingIgnoreCase(
+				Optional.ofNullable(wineFilter.getName()).orElse("") ));
+		
+		return modelAndView;
 	}
 }
