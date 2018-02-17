@@ -44,9 +44,9 @@
 			    	</thead>
 			    	<tbody>
 			    		<tr th:each="wine : ${wines}">
-			    			<td class="text-center" th:text="${wine.id}"></td>
+			    			<td class="text-center" th:text="${wine.id}"><a th:href=""></a></td>
 			    			<td>
-			    				<span th:text="${wine.name}"></span>
+			    				<a th:href="@{/wines/{id}(id=${wine.id})}" th:text="${wine.name}"></a>
 			    			</td>
 			    			<td class="text-center" th:text="#{|wineType.${wine.wineType}|}"></td>
 			    			<td class="text-right" th:text="|R$ ${{wine.price}}|"></td>

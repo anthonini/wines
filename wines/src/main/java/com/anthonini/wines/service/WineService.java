@@ -18,7 +18,7 @@ public class WineService {
 	public void save(Wine wine) {
 		Optional<Wine> existingWine = wineRepository.findByNameIgnoreCase(wine.getName());
 		
-		if(existingWine.isPresent()) {
+		if(existingWine.isPresent() && !existingWine.get().equals(wine) ) {
 			throw new WineNameAlreadyExistsException(String.format("%s name already exists", wine.getName()));
 		}
 		wineRepository.save(wine);

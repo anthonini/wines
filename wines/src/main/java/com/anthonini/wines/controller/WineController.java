@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -33,6 +34,7 @@ public class WineController {
 	@GetMapping("/new")
 	public ModelAndView form(Wine wine) {
 		ModelAndView modelAndView = new ModelAndView("wine/form");
+		modelAndView.addObject(wine);
 		modelAndView.addObject("wineTypes", WineType.values());
 		
 		return modelAndView;
@@ -62,5 +64,12 @@ public class WineController {
 				Optional.ofNullable(wineFilter.getName()).orElse("") ));
 		
 		return modelAndView;
+	}
+	
+	@GetMapping("/{id}")
+	public ModelAndView edit(@PathVariable Long id) {
+		Wine wine = wineRepository.findOne(id);
+		
+		return form(wine);
 	}
 }
