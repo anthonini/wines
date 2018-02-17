@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	
+	<aside class="wines-layout-sidebar  js-sidebar" th:fragment="layout-sidebar">
+		<div class="wines-layout-sidebar__content">
+		    <nav class="wines-menu  js-menu">
+		      <ul class="wines-menu__list">
+		        <li class="wines-menu__item">
+		          <a th:href="@{/wines/new}"><i class="fa  fa-fw  fa-home"></i><span>Register</span></a>
+		        </li>
+		        
+		        <li class="wines-menu__item">
+		          <a th:href="@{/wines}"><i class="fa  fa-fw  fa-search is-active"></i><span>Search</span></a>
+		        </li>
+		      </ul>
+		    </nav>
+		</div>
+	</aside>
+	
+</html>
