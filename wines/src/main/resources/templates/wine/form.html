@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout-default}">
+
+<body>
+
+<section layout:fragment="content">
+	
+	<div class="page-header">
+		<div class="container-fluid">
+			<h1>
+				Wine Register
+			</h1>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+	
+		<div class="alert  alert-success  alert-dismissible" role="alert" th:if="${!#strings.isEmpty(message)}">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<span th:text="${message}"></span>
+		</div>
+	
+		<form method="POST" class="form-vertical" th:action="@{/wines/new}" th:object="${wine}">
+			
+			<div class="alert  alert-danger  alert-dismissible" role="alert" th:if="${#fields.hasAnyErrors()}">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<th:block th:each="error : ${#fields.detailedErrors()}">
+					<div>
+							<i class="fa  fa-exclamation-circle"></i>
+							<span th:text="${error.message}"></span>
+					</div>
+				</th:block>
+			</div>
+			
+			<input type="hidden" th:field="*{id}" />
+			
+			<div class="form-group wines-required" th:classappend="${#fields.hasErrors('name')} ? has-error">
+				<label for="input-product-name" class="control-label">Name</label>
+				<input id="input-product-name" type="text" class="form-control" th:field="*{name}" />
+			</div>
+	
+			<div class="row">			
+				<div class="col-sm-6">
+					<div class="form-group wines-required" th:classappend="${#fields.hasErrors('wineType')} ? has-error">
+						<label for="select-product-type" class="control-label">Type</label>
+						<select id="select-product-type" class="form-control" th:field="*{wineType}">
+							<option value="">Select one</option>
+							<option th:each="wineType : ${wineTypes}" th:value="${wineType}" th:text="#{|wineType.${wineType}|}">Wine Type</option>
+						</select>
+					</div>
+				</div>
+				
+				<div class="col-sm-6">
+					<div class="form-group wines-required" th:classappend="${#fields.hasErrors('price')} ? has-error">
+						<label for="input-product-price" class="control-label">Price</label>
+						<input id="input-product-price" type="text" class="form-control js-currency" placeholder="R$" th:field="*{price}"/>
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<button class="btn  btn-primary" type="submit">Save</button>
+			</div>
+			
+			<div class="wines-required-fields-text">
+				* Required fields
+			</div>
+	
+		</form>
+	</div>
+
+</section>
+
+</body>
+</html>

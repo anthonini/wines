@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data-attribute"
+	layout:decorate="~{layout/layout-default}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<body>
+
+<section layout:fragment="content">
+	<div class="page-header">
+		<div class="container-fluid">
+			<h1>
+				Wine Search
+			</h1>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+		
+		<div class="alert  alert-success  alert-dismissible" role="alert" th:if="${!#strings.isEmpty(message)}">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<span th:text="${message}"></span>
+		</div>
+		
+		<form method="GET" class="form-vertical js-form-loading" th:object="${wineFilter}">		
+			
+			<div class="form-group">
+				<div class="input-group">
+					<input id="nome" type="text" class="form-control" placeholder="Search by nome" th:field="*{name}" autofocus="autofocus"/>
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="submit">
+							<span class="glyphicon glyphicon-search"></span>
+						</button>
+					</span>
+				</div>
+			</div>
+	
+			<div class="table-responsive">
+			    <table class="table table-bordered table-striped">
+			    	<thead>
+			    		<tr>
+			    			<th class="text-center col-md-1">#</th>
+			    			<th class="col-md-7">Name</th>
+			    			<th class="text-center col-md-1">Type</th>
+			    			<th class="text-right col-md-2">Price</th>
+			    			<th class="col-md-1" sec:authorize="hasRole('ROLE_REGISTER_WINE')"></th>
+			    		</tr>
+			    	</thead>
+			    	<tbody>
+			    		<tr th:each="wine : ${wines}">
+			    			<td class="text-center" th:text="${wine.id}"><a th:href=""></a></td>
+			    			<td>
+			    				<a th:href="@{/wines/{id}(id=${wine.id})}" th:text="${wine.name}" sec:authorize="hasRole('ROLE_REGISTER_WINE')"></a>
+			    				<span th:text="${wine.name}" sec:authorize="!hasRole('ROLE_REGISTER_WINE')"></span>
+			    			</td>
+			    			<td class="text-center" th:text="#{|wineType.${wine.wineType}|}"></td>
+			    			<td class="text-right" th:text="|R$ ${{wine.price}}|"></td>
+			    			<td class="text-center" sec:authorize="hasRole('ROLE_REGISTER_WINE')">
+			    				<i class="fa fa-trash" style="cursor:pointer"
+			    					data-toggle="modal" data-target="#deleteConfirmationModal"
+			    					data:name="${wine.name}"
+			    					data:url-delete="@{/wines/{id}(id=${wine.id})}"></i>
+			    			</td>
+			    		</tr>
+			    		<tr th:if="${#lists.isEmpty(wines)}">
+			    			<td colspan="6">No wine found.</td>
+			    		</tr>
+			    	</tbody>
+			    </table>
+		    </div>		
+		</form>
+	</div>
+
+	<div class="modal fade" id="deleteConfirmationModal" role="dialog">
+		<div class="modal-dialog"></div>
+		<div class="modal-content">
+			<form th:action="@{/vinhos}" method="POST">
+				<input type="hidden" name="_method" value="DELETE">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Remove wine</h4>
+				</div>
+				<div class="modal-body">
+					<span>Are you sure?</span>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+					<button type="submit" class="btn btn-primary">Excluir</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</section>
+
+<th:block layout:fragment="extra-javascript">
+	<script th:src="@{/layout/javascripts/list.delete-confirmation-modal.js}"></script>
+</th:block>
+
+</body>
+</html>
