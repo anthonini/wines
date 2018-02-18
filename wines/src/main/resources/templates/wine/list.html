@@ -4,7 +4,8 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	xmlns:data="http://www.thymeleaf.org/extras/data-attribute"
-	layout:decorate="~{layout/layout-default}">
+	layout:decorate="~{layout/layout-default}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <body>
 
@@ -45,18 +46,19 @@
 			    			<th class="col-md-7">Name</th>
 			    			<th class="text-center col-md-1">Type</th>
 			    			<th class="text-right col-md-2">Price</th>
-			    			<th class="col-md-1"></th>
+			    			<th class="col-md-1" sec:authorize="hasRole('ROLE_REGISTER_WINE')"></th>
 			    		</tr>
 			    	</thead>
 			    	<tbody>
 			    		<tr th:each="wine : ${wines}">
 			    			<td class="text-center" th:text="${wine.id}"><a th:href=""></a></td>
 			    			<td>
-			    				<a th:href="@{/wines/{id}(id=${wine.id})}" th:text="${wine.name}"></a>
+			    				<a th:href="@{/wines/{id}(id=${wine.id})}" th:text="${wine.name}" sec:authorize="hasRole('ROLE_REGISTER_WINE')"></a>
+			    				<span th:text="${wine.name}" sec:authorize="!hasRole('ROLE_REGISTER_WINE')"></span>
 			    			</td>
 			    			<td class="text-center" th:text="#{|wineType.${wine.wineType}|}"></td>
 			    			<td class="text-right" th:text="|R$ ${{wine.price}}|"></td>
-			    			<td class="text-center">
+			    			<td class="text-center" sec:authorize="hasRole('ROLE_REGISTER_WINE')">
 			    				<i class="fa fa-trash" style="cursor:pointer"
 			    					data-toggle="modal" data-target="#deleteConfirmationModal"
 			    					data:name="${wine.name}"

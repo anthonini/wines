@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	
+<head>
+	<meta charset="UTF-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+	<title>Wines</title>
+
+	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/vendors.min.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/wines.css}"/>
+	
+</head>
+<body class="wines-layout-simple-page">
+
+	<div class="wines-layout-simple-page__container">
+		<th:block layout:fragment="content"/>
+	</div>
+
+<script th:src="@{/layout/javascripts/vendors.min.js}"></script>
+</body>
+</html>

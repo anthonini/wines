@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org"
+	layout:decorate="~{layout/layout-simple}">
+	
+<th:block layout:fragment="content">
+
+	<div class="wines-error-panel">
+		<h1 class="wines-error-panel__code">
+			<i class="fa fa-location-arrow"></i> 403
+		</h1>
+		
+		<h2 class="wines-error-panel__title">Access denied</h2>
+		
+		<div class="wines-error-panel__description">
+			Sorry, you are not authorized to access the page you requested.
+			If you think this is a mistake, contact us
+			<br/><br/>
+			<a th:href="@{/wines}" class="btn  btn-primary">Go back to homepage</a>
+		</div>
+	</div>
+</th:block>
+	
+</html>

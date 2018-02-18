@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout-simple}">
+	
+	<th:block layout:fragment="content">
+		<form th:action="@{/login}" method="POST">
+			<div class="wines-simple-panel">
+				<img alt="Anthonini" th:src="@{/layout/images/logo-small.png}"/>
+				
+				<div class="wines-simple-panel__message">
+					Please, login
+				</div>
+				
+				<div class="wines-simple-panel__message is-error" th:if="${#bools.isTrue(param.error)}">
+					User or password don't match
+				</div>
+				
+				<div class="wines-simple-panel__box">
+					<div class="form-group has-feedback">
+						<input type="text" class="form-control input-lg" placeholder="login"
+							autofocus="autofocus" name="username"/>
+							<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+					</div>
+					
+					<div class="form-group has-feedback">
+						<input type="password" class="form-control input-lg" placeholder="senha"
+							name="password"/>
+							<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary btn-lg wines-btn-full-width">Entrar</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</th:block>
+</html> 

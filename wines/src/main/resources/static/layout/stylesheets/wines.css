@@ -8,6 +8,16 @@
   min-height: 100%;
   padding-bottom: 60px;
 }
+.wines-layout-simple-page {
+  background-color: #f6f6f6;
+}
+.wines-layout-simple-page__container {
+  display: block;
+  max-width: 420px;
+  margin: auto;
+  padding: 0 10px;
+  padding-top: 10%;
+}
 .wines-layout-footer {
   position: absolute;
   left: 0;
@@ -156,4 +166,50 @@ body {
   height: 80px;
   color: #333333;
 }
-
+/*---------------------------------------*\
+  Simple panel
+  - Used to login
+\*---------------------------------------*/
+.wines-simple-panel {
+  color: #777777;
+  text-align: center;
+}
+.wines-simple-panel__message {
+  padding: 20px 0px;
+}
+.wines-simple-panel__message.is-error {
+  color: #e70500;
+}
+.wines-simple-panel__box {
+  padding: 20px;
+  padding-bottom: 5px;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  background-color: #fff;
+}
+.wines-btn-full-width {
+  width: 100%;
+}
+.wines-simple-panel__footer {
+  padding: 10px 0;
+}
+/*-----------------------------------------------------------*\
+  Error panel
+  - To be used in simple error pages (404, 500, etc)
+\*-----------------------------------------------------------*/
+.wines-error-panel {
+  color: #777777;
+  text-align: center;
+}
+.wines-error-panel__title {
+  font-size: 32px;
+}
+.wines-error-panel__description {
+  display: block;
+  padding: 18px 0;
+}
+.wines-error-panel__code {
+  color: #d9d9d9;
+  font-size: 80px;
+  font-weight: normal;
+}
